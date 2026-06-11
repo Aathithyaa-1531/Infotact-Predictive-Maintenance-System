@@ -43,10 +43,10 @@
             <i class="bi bi-chat-dots"></i> Get In Touch
           </span>
           <h1 class="hero-title mb-4">
-            Hum Se <span class="gradient-text">Connect Karo</span>
+            Contact <span class="gradient-text">Us</span>
           </h1>
           <p class="hero-subtitle">
-            Kisi bhi swal ya suggestion ke liye hum aapke liye available hain. Hum aapse sunna pasand karenge!
+           Have any questions, feedback, or suggestions? We're here to help and would love to hear from you.
           </p>
         </div>
       </div>
@@ -54,89 +54,150 @@
   </section>
 
   <!-- CONTACT SECTION -->
-  <section class="contact-section">
-    <div class="container">
-      <div class="row g-5 mb-5">
-        <!-- Contact Form -->
-        <div class="col-lg-6 fade-in-scroll">
-          <div style="background: linear-gradient(135deg, rgba(30, 41, 59, 0.95), rgba(30, 41, 59, 0.8)); border: 2px solid rgba(245, 158, 11, 0.3); border-radius: 1.5rem; padding: 2.5rem;">
-            <h3 class="text-warning fw-bold mb-4">Message Bhejiye</h3>
-            <form>
-              <div class="mb-3">
-                <label class="form-label text-secondary fw-bold">Name</label>
-                <input type="text" class="form-control-custom" placeholder="Enter your Name" required>
-              </div>
-              <div class="mb-3">
-                <label class="form-label text-secondary fw-bold">Email</label>
-                <input type="email" class="form-control-custom" placeholder="Enter your Email" required>
-              </div>
-              <div class="mb-3">
-                <label class="form-label text-secondary fw-bold">Subject</label>
-                <input type="text" class="form-control-custom" placeholder="EnterMessage Subject" required>
-              </div>
-              <div class="mb-4">
-                <label class="form-label text-secondary fw-bold">Message</label>
-                <textarea class="form-control-custom" rows="5" placeholder="Enter your message here..." required></textarea>
-              </div>
-              <button type="submit" class="btn-predict-submit w-100">
-                <i class="bi bi-send"></i> Send Message
-              </button>
-            </form>
-          </div>
-        </div>
+<section class="contact-section">
+  <div class="container">
+    <div class="row g-5 mb-5">
 
-        <!-- Contact Info -->
-        <div class="col-lg-6 fade-in-scroll" style="--delay: 0.2s;">
-          <div style="display: flex; flex-direction: column; gap: 2rem;">
-            <!-- Email -->
-            <div class="contact-card">
-              <i class="bi bi-envelope-fill"></i>
-              <h5>Email</h5>
-              <p>
-                <a href="mailto:support@infotact.com" class="contact-link">support@infotact.com</a>
-              </p>
-              <small class="text-secondary">We reply within 24 hours</small>
+      <!-- Contact Form -->
+      <div class="col-lg-6 fade-in-scroll">
+        <div style="background: linear-gradient(135deg, rgba(30, 41, 59, 0.95), rgba(30, 41, 59, 0.8)); border: 2px solid rgba(245, 158, 11, 0.3); border-radius: 1.5rem; padding: 2.5rem; height: 100%;">
+
+          <h3 class="text-warning fw-bold mb-4">
+            <i class="bi bi-envelope-paper-fill"></i>
+            Send us a Message
+          </h3>
+
+          <form>
+            <div class="mb-3">
+              <label class="form-label text-secondary fw-bold">Name</label>
+              <input type="text" class="form-control-custom" placeholder="Enter your Name" required>
             </div>
 
-            <!-- Phone -->
-            <div class="contact-card">
-              <i class="bi bi-telephone-fill"></i>
-              <h5>Phone</h5>
-              <p>
-                <a href="tel:+917357919798" class="contact-link">+91-7357919798</a>
-              </p>
-              <small class="text-secondary">24 Hours, 7 Days a week</small>
+            <div class="mb-3">
+              <label class="form-label text-secondary fw-bold">Email</label>
+              <input type="email" class="form-control-custom" placeholder="Enter your Email" required>
             </div>
 
-            <!-- Location -->
-            <div class="contact-card">
-              <i class="bi bi-geo-alt-fill"></i>
-              <h5>Location</h5>
-              <p class="contact-text">
-                Infotact Labs<br>
-                India
-              </p>
-              <small class="text-secondary">Infotact Center</small>
+            <div class="mb-3">
+              <label class="form-label text-secondary fw-bold">Subject</label>
+              <input type="text" class="form-control-custom" placeholder="Enter Message Subject" required>
             </div>
 
-            <!-- Office Hours -->
-            <div class="contact-card">
-              <i class="bi bi-clock-fill"></i>
-              <h5>Office Hours</h5>
-              <p class="contact-text">
-                Monday - Saturday: 9:00 AM - 9:00 PM<br>
-                Sunday: 10:00 AM - 6:00 PM
-              </p>
-              <small class="text-secondary">IST Timezone</small>
+            <div class="mb-4">
+              <label class="form-label text-secondary fw-bold">Message</label>
+              <textarea class="form-control-custom" rows="5" placeholder="Enter your message here..." required></textarea>
             </div>
-          </div>
+
+            <button type="submit" class="btn-predict-submit w-100">
+              <i class="bi bi-send"></i>
+              Send Message
+            </button>
+          </form>
+
         </div>
       </div>
+
+      <!-- Right Side Image -->
+      <div class="col-lg-6 fade-in-scroll" style="--delay:0.2s;">
+
+        <div class="contact-image-box">
+
+          <img src="{{ url_for('static', filename='images/contact-support.png') }}"
+               alt="Customer Support"
+               class="img-fluid contact-page-image">
+
+          <div class="contact-image-overlay">
+            <h4>
+              <i class="bi bi-headset"></i>
+              24/7 Technical Support
+            </h4>
+
+            <p>
+              Get assistance for engine monitoring,
+              predictive maintenance and AI-based analysis.
+            </p>
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+ <!-- CONTACT INFO SECTION -->
+<div class="row mt-5 g-4">
+
+    <!-- Email -->
+    <div class="col-lg-6">
+        <div class="contact-card">
+            <i class="bi bi-envelope-fill"></i>
+            <h5>Email</h5>
+            <p>
+                <a href="mailto:support@infotact.com" class="contact-link">
+                    support@infotact.com
+                </a>
+            </p>
+            <small class="text-secondary">
+                We reply within 24 hours
+            </small>
+        </div>
+    </div>
+
+    <!-- Phone -->
+    <div class="col-lg-6">
+        <div class="contact-card">
+            <i class="bi bi-telephone-fill"></i>
+            <h5>Phone</h5>
+            <p>
+                <a href="tel:+917357919798" class="contact-link">
+                    +91-7357919798
+                </a>
+            </p>
+            <small class="text-secondary">
+                24 Hours, 7 Days a Week
+            </small>
+        </div>
+    </div>
+
+    <!-- Location -->
+    <div class="col-lg-6">
+        <div class="contact-card">
+            <i class="bi bi-geo-alt-fill"></i>
+            <h5>Location</h5>
+            <p class="contact-text">
+                Infotact Labs<br>
+                India
+            </p>
+            <small class="text-secondary">
+                Infotact Center
+            </small>
+        </div>
+    </div>
+
+    <!-- Office Hours -->
+    <div class="col-lg-6">
+        <div class="contact-card">
+            <i class="bi bi-clock-fill"></i>
+            <h5>Office Hours</h5>
+            <p class="contact-text">
+                Monday - Saturday: 9:00 AM - 9:00 PM<br>
+                Sunday: 10:00 AM - 6:00 PM
+            </p>
+            <small class="text-secondary">
+                IST Timezone
+            </small>
+        </div>
+    </div>
+
+</div>
 
       <!-- Social Links -->
       <div class="row mt-5 fade-in-scroll">
         <div class="col-12 text-center">
-          <h3 class="text-warning fw-bold mb-4">Follow Hume</h3>
+          <h3 class="text-warning fw-bold mb-4">Follow Us</h3>
           <div style="display: flex; gap: 1.5rem; justify-content: center; flex-wrap: wrap;">
             <a href="#" class="social-icon-link">
               <i class="bi bi-facebook"></i>
@@ -170,36 +231,36 @@
             <div class="accordion-item" style="background: rgba(30, 41, 59, 0.9); border: 1px solid rgba(245, 158, 11, 0.2);">
               <h2 class="accordion-header">
                 <button class="accordion-button collapsed" style="background: transparent; color: #e2e8f0;" type="button" data-bs-toggle="collapse" data-bs-target="#faq1">
-                  Prediction kitna accurate hai?
+                  Any problem using this project?
                 </button>
               </h2>
               <div id="faq1" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
                 <div class="accordion-body text-secondary">
-                  Hamara model 92% accuracy ke saath predictions deta hai. Yeh Random Forest algorithm par based hai jo AI4I 2020 dataset par train hai.
+                  If you encounter any issues while using this project, please feel free to reach out to us. We're here to help!
                 </div>
               </div>
             </div>
             <div class="accordion-item" style="background: rgba(30, 41, 59, 0.9); border: 1px solid rgba(245, 158, 11, 0.2); margin-top: 1rem;">
               <h2 class="accordion-header">
                 <button class="accordion-button collapsed" style="background: transparent; color: #e2e8f0;" type="button" data-bs-toggle="collapse" data-bs-target="#faq2">
-                  Kya mujhe technical knowledge chahiye?
+                  When should I schedule maintenance for my engine?
                 </button>
               </h2>
               <div id="faq2" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
                 <div class="accordion-body text-secondary">
-                  Bilkul nahi! Hamara interface bahut user-friendly hai. Sirf engine parameters fill karo aur results dekho.
+                  Not at all! Our interface is designed to be highly user-friendly. Simply enter the engine parameters and view the prediction results instantly.
                 </div>
               </div>
             </div>
             <div class="accordion-item" style="background: rgba(30, 41, 59, 0.9); border: 1px solid rgba(245, 158, 11, 0.2); margin-top: 1rem;">
               <h2 class="accordion-header">
                 <button class="accordion-button collapsed" style="background: transparent; color: #e2e8f0;" type="button" data-bs-toggle="collapse" data-bs-target="#faq3">
-                  Kya data safe hai?
+                  Is my data secure?
                 </button>
               </h2>
               <div id="faq3" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
                 <div class="accordion-body text-secondary">
-                  Haan, sab data locally store hota hai SQLite mein. Koi bhi data third-party ko share nahi hota.
+                  Yes, all data is securely stored in a local SQLite database. No user information is shared with third parties, ensuring privacy and data security. 🔒🚀
                 </div>
               </div>
             </div>
