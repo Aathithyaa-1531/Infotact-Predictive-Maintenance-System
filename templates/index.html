@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="hi">
+<html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -21,7 +21,7 @@
         <span class="navbar-toggler-icon"></span>
       </button>
       <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
-        <div class="nav-links d-flex gap-4">
+        <div class="nav-links d-flex gap-4 align-items-center">
           <a href="#home" class="nav-link-custom active">Home</a>
           <a href="#dashboard" class="nav-link-custom">Dashboard</a>
           <a href="#predict" class="nav-link-custom">Predict</a>
@@ -29,6 +29,13 @@
           <a href="/about" class="nav-link-custom">About</a>
           <a href="/project" class="nav-link-custom">Project</a>
           <a href="/contact" class="nav-link-custom">Contact</a>
+          {% if session.get('username') %}
+            <span class="nav-user-welcome"><i class="bi bi-person-circle text-warning"></i> {{ session.get('username') }}</span>
+            <a href="/logout" class="btn btn-outline-danger btn-sm nav-auth-btn"><i class="bi bi-box-arrow-right"></i> Logout</a>
+          {% else %}
+            <a href="/login" class="btn btn-outline-warning btn-sm nav-auth-btn"><i class="bi bi-box-arrow-in-right"></i> Sign In</a>
+            <a href="/signup" class="btn btn-warning btn-sm nav-auth-btn text-dark"><i class="bi bi-person-plus"></i> Sign Up</a>
+          {% endif %}
         </div>
       </div>
     </div>
@@ -48,7 +55,7 @@
         </span>
 
         <h1 class="hero-title glow-text">
-          Engine Ka
+          Engine's
           <span class="gradient-text">Professional Health Check</span>
         </h1>
 
@@ -108,7 +115,7 @@
       <div class="section-header text-center mb-5">
         <span class="section-badge">📊 Analytics Dashboard</span>
         <h2 class="section-title">Real-Time System Overview</h2>
-        <p class="section-subtitle">Latest predictions aur engine health status</p>
+        <p class="section-subtitle">Latest predictions and engine health status</p>
       </div>
 
       <!-- Stats Grid -->
@@ -220,6 +227,7 @@
   <!-- LEFT SIDE FORM -->
 
   <div class="col-lg-7">
+    {% if session.get('username') %}
     <div class="prediction-form-container fade-in-scroll">
 
 ```
@@ -330,7 +338,19 @@
 
 </div>
 ```
-
+    {% else %}
+    <div class="prediction-form-container locked-container text-center fade-in-scroll">
+      <div class="lock-icon-wrapper mb-4">
+        <i class="bi bi-lock-fill text-warning"></i>
+      </div>
+      <h3 class="fw-bold mb-3 text-warning">Prediction Feature Locked</h3>
+      <p class="text-secondary mb-4">Please sign in to check the engine's health. Access full AI analytics and prediction history reporting.</p>
+      <div class="d-flex justify-content-center gap-3">
+        <a href="/login" class="btn btn-primary-custom btn-lg"><i class="bi bi-box-arrow-in-right"></i> Sign In</a>
+        <a href="/signup" class="btn btn-outline-custom btn-lg"><i class="bi bi-person-plus"></i> Sign Up</a>
+      </div>
+    </div>
+    {% endif %}
   </div>
 
   <!-- RIGHT SIDE IMAGE -->
@@ -501,6 +521,18 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
 <script>
+  // Auto-dismiss alert messages after 3 seconds
+  setTimeout(function() {
+    const alerts = document.querySelectorAll('.alert');
+    alerts.forEach(function(alert) {
+      alert.style.transition = 'opacity 0.5s ease-out';
+      alert.style.opacity = '0';
+      setTimeout(function() {
+        alert.remove();
+      }, 500);
+    });
+  }, 3000);
+
   // Smooth scrolling
   document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     anchor.addEventListener('click', function (e) {

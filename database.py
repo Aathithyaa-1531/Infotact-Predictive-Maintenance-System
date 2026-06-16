@@ -31,15 +31,38 @@ def init_db():
             wear REAL NOT NULL,
             air_temp REAL NOT NULL,
             process_temp REAL NOT NULL,
-            fail_prediction INTEGER NOT NULL
+            fail_prediction INTEGER NOT NULL,
+            user_id INTEGER
         )
     ''')
+    
+    # Check if user_id column exists, if not, add it (migration for existing DB)
+    cursor.execute("PRAGMA table_info(predictions)")
+    columns = [col[1] for col in cursor.fetchall()]
+    if 'user_id' not in columns:
+        cursor.execute("ALTER TABLE predictions ADD COLUMN user_id INTEGER")
+    
+    cursor.execute('''
+        CREATE TABLE IF NOT EXISTS users (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            username TEXT UNIQUE NOT NULL,
+            email TEXT UNIQUE,
+            password TEXT NOT NULL,
+            created_at TEXT NOT NULL
+        )
+    ''')
+    
+    # Check if email column exists, if not, add it (migration for existing DB)
+    cursor.execute("PRAGMA table_info(users)")
+    columns = [col[1] for col in cursor.fetchall()]
+    if 'email' not in columns:
+        cursor.execute("ALTER TABLE users ADD COLUMN email TEXT")
     
     conn.commit()
     conn.close()
 
 
-def save_prediction(form_data, result):
+def save_prediction(form_data, result, user_id=None):
     """Save prediction to database"""
     conn = get_db()
     cursor = conn.cursor()
@@ -48,8 +71,8 @@ def save_prediction(form_data, result):
         INSERT INTO predictions (
             created_at, engine_type, health_score, risk_level, 
             failure_prob, safe_days, rpm, torque, wear, 
-            air_temp, process_temp, fail_prediction
-        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+            air_temp, process_temp, fail_prediction, user_id
+        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
     ''', (
         result['time'],
         result['engine'],
@@ -62,19 +85,24 @@ def save_prediction(form_data, result):
         result['wear'],
         float(form_data.get('air_temp', 298.5)),
         float(form_data.get('process_temp', 309)),
-        result['fail']
+        result['fail'],
+        user_id
     ))
     
     conn.commit()
     conn.close()
 
 
-def get_predictions():
-    """Get all predictions from database"""
+def get_predictions(user_id=None):
+    """Get predictions from database (optionally filtered by user_id)"""
     conn = get_db()
     cursor = conn.cursor()
     
-    cursor.execute('SELECT * FROM predictions ORDER BY id DESC')
+    if user_id is not None:
+        cursor.execute('SELECT * FROM predictions WHERE user_id = ? ORDER BY id DESC', (user_id,))
+    else:
+        cursor.execute('SELECT * FROM predictions ORDER BY id DESC')
+        
     rows = cursor.fetchall()
     conn.close()
     
@@ -99,23 +127,30 @@ def get_predictions():
     return predictions
 
 
-def get_stats():
-    """Get database statistics"""
+def get_stats(user_id=None):
+    """Get database statistics (optionally filtered by user_id)"""
     conn = get_db()
     cursor = conn.cursor()
     
-    # Total predictions
-    cursor.execute('SELECT COUNT(*) as count FROM predictions')
-    total = cursor.fetchone()['count']
-    
-    # Healthy predictions (safe risk level)
-    cursor.execute('SELECT COUNT(*) as count FROM predictions WHERE risk_level = ?', ('safe',))
-    healthy = cursor.fetchone()['count']
-    
-    # Critical predictions (danger risk level)
-    cursor.execute('SELECT COUNT(*) as count FROM predictions WHERE risk_level = ?', ('danger',))
-    critical = cursor.fetchone()['count']
-    
+    if user_id is not None:
+        cursor.execute('SELECT COUNT(*) as count FROM predictions WHERE user_id = ?', (user_id,))
+        total = cursor.fetchone()['count']
+        
+        cursor.execute('SELECT COUNT(*) as count FROM predictions WHERE risk_level = ? AND user_id = ?', ('safe', user_id))
+        healthy = cursor.fetchone()['count']
+        
+        cursor.execute('SELECT COUNT(*) as count FROM predictions WHERE risk_level = ? AND user_id = ?', ('danger', user_id))
+        critical = cursor.fetchone()['count']
+    else:
+        cursor.execute('SELECT COUNT(*) as count FROM predictions')
+        total = cursor.fetchone()['count']
+        
+        cursor.execute('SELECT COUNT(*) as count FROM predictions WHERE risk_level = ?', ('safe',))
+        healthy = cursor.fetchone()['count']
+        
+        cursor.execute('SELECT COUNT(*) as count FROM predictions WHERE risk_level = ?', ('danger',))
+        critical = cursor.fetchone()['count']
+        
     conn.close()
     
     return {
@@ -123,3 +158,57 @@ def get_stats():
         'healthy': healthy,
         'critical': critical
     }
+
+
+def create_user(username, email, password_hash):
+    """Create a new user"""
+    conn = get_db()
+    cursor = conn.cursor()
+    try:
+        cursor.execute('''
+            INSERT INTO users (username, email, password, created_at)
+            VALUES (?, ?, ?, ?)
+        ''', (username, email, password_hash, datetime.now().strftime("%d %b %Y, %I:%M %p")))
+        conn.commit()
+        success = True
+    except sqlite3.IntegrityError:
+        success = False
+    finally:
+        conn.close()
+    return success
+
+
+def get_user_by_username(username):
+    """Retrieve user record by username"""
+    conn = get_db()
+    cursor = conn.cursor()
+    cursor.execute('SELECT * FROM users WHERE username = ?', (username,))
+    row = cursor.fetchone()
+    conn.close()
+    if row:
+        return {
+            'id': row['id'],
+            'username': row['username'],
+            'email': row['email'],
+            'password': row['password'],
+            'created_at': row['created_at']
+        }
+    return None
+
+
+def get_user_by_email(email):
+    """Retrieve user record by email"""
+    conn = get_db()
+    cursor = conn.cursor()
+    cursor.execute('SELECT * FROM users WHERE email = ?', (email,))
+    row = cursor.fetchone()
+    conn.close()
+    if row:
+        return {
+            'id': row['id'],
+            'username': row['username'],
+            'email': row['email'],
+            'password': row['password'],
+            'created_at': row['created_at']
+        }
+    return None

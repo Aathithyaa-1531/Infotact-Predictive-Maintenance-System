@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="hi">
+<html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -21,7 +21,7 @@
         <span class="navbar-toggler-icon"></span>
       </button>
       <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
-        <div class="nav-links d-flex gap-4">
+        <div class="nav-links d-flex gap-4 align-items-center">
           <a href="/" class="nav-link-custom">Home</a>
           <a href="/#dashboard" class="nav-link-custom">Dashboard</a>
           <a href="/#predict" class="nav-link-custom">Predict</a>
@@ -29,6 +29,13 @@
           <a href="/about" class="nav-link-custom">About</a>
           <a href="/project" class="nav-link-custom">Project</a>
           <a href="/contact" class="nav-link-custom">Contact</a>
+          {% if session.get('username') %}
+            <span class="nav-user-welcome"><i class="bi bi-person-circle text-warning"></i> {{ session.get('username') }}</span>
+            <a href="/logout" class="btn btn-outline-danger btn-sm nav-auth-btn"><i class="bi bi-box-arrow-right"></i> Logout</a>
+          {% else %}
+            <a href="/login" class="btn btn-outline-warning btn-sm nav-auth-btn"><i class="bi bi-box-arrow-in-right"></i> Sign In</a>
+            <a href="/signup" class="btn btn-warning btn-sm nav-auth-btn text-dark"><i class="bi bi-person-plus"></i> Sign Up</a>
+          {% endif %}
         </div>
       </div>
     </div>
@@ -52,17 +59,17 @@
       </div>
 
       <h1 class="fw-bold mb-3" style="font-size: 2.5rem; color: var(--text-primary);">
-        Oops! Page Nahi Mila
+        Oops! Page Not Found
       </h1>
 
       <p class="text-secondary mb-4" style="font-size: 1.2rem; max-width: 500px; margin-left: auto; margin-right: auto;">
-        Aap galat page par pahuunch gaye ho. Yeh URL galat hai ya page delete ho gya hai.
+        You have reached the wrong page. This URL is incorrect or the page has been deleted.
       </p>
 
       <div style="background: linear-gradient(135deg, rgba(30, 41, 59, 0.9), rgba(30, 41, 59, 0.6)); border: 1px solid rgba(245, 158, 11, 0.2); border-radius: 1rem; padding: 2rem; margin: 2rem 0; max-width: 400px; margin-left: auto; margin-right: auto;">
         <i class="bi bi-exclamation-triangle" style="font-size: 2rem; color: #f59e0b;"></i>
         <p class="text-secondary mt-3 mb-0">
-          Agar aapko laga ki ye error hai to hume support@innovtech.com par contact kar sakte ho.
+          If you think this is an error, please contact us at support@innovtech.com.
         </p>
       </div>
 
