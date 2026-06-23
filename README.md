@@ -19,7 +19,7 @@ Target Variable:
 
 * Machine Failure (0 = No Failure, 1 = Failure)
 
-## What I Did
+## What We Did
 
 * Loaded and explored the dataset
 * Cleaned and preprocessed the data
