@@ -5,9 +5,7 @@ import joblib
 import pandas as pd
 from flask import Flask, render_template, request, redirect, url_for, flash, session
 from werkzeug.security import generate_password_hash, check_password_hash
-
 from database import init_db, save_prediction, get_predictions, get_stats, create_user, get_user_by_username, get_user_by_email
-
 app = Flask(__name__)
 app.secret_key = "dev-key"
 
@@ -18,7 +16,6 @@ TYPE_MAP = {"L": 0, "M": 1, "H": 2}
 TYPE_LABELS = {"L": "Light", "M": "Medium", "H": "Heavy"}
 
 init_db()
-
 
 def predict_engine(form):
     air = float(form["air_temp"])
@@ -69,7 +66,6 @@ def predict_engine(form):
         "wear": wear,
         "engine": TYPE_LABELS.get(form.get("engine_type", "M"), "Medium"),
     }
-
 
 @app.route("/")
 def home():
